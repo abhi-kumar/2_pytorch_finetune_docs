@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>2_pytorch_finetune.lib.detector_prototype API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>2_pytorch_finetune.lib.detector_prototype</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import os
+import sys
+import numpy as np
+import pandas as pd
+import cv2
+
+from engine import train_one_epoch, evaluate
+import utils
+import os
+import numpy as np
+import torch
+import pandas as pd
+from PIL import Image
+Image.LOAD_TRUNCATED_IMAGES = True
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+def isnotebook():
+    try:
+        shell = get_ipython().__class__.__name__
+        if shell == &#39;ZMQInteractiveShell&#39;:
+            return True   # Jupyter notebook or qtconsole
+        elif shell == &#39;TerminalInteractiveShell&#39;:
+            return False  # Terminal running IPython
+        else:
+            return False  # Other type (?)
+    except NameError:
+        return False
+if(isnotebook()):
+    from tqdm.notebook import tqdm
+else:
+    from tqdm import tqdm as tqdm
+
+
+import transforms as T
+from data_loader_class import CustomDatasetMultiObject
+
+import torchvision
+from torchvision.models.detection import FasterRCNN
+from torchvision.models.detection.rpn import AnchorGenerator
+
+class Detector():
+    &#39;&#39;&#39;
+    Class to train a detector
+
+    Args:
+        verbose (int): Set verbosity levels
+                        0 - Print Nothing
+                        1 - Print desired details
+    &#39;&#39;&#39;
+    def __init__(self, verbose=1):
+        self.system_dict = {};
+        self.system_dict[&#34;verbose&#34;] = verbose;
+        self.system_dict[&#34;local&#34;] = {};
+        self.system_dict[&#34;model_set_1&#34;] = [&#34;faster-rcnn_mobilenet-v2&#34;]
+
+
+
+    def Dataset(self, train_dataset, val_dataset=None, batch_size=4, num_workers=4):
+        &#39;&#39;&#39;
+        User function: Set dataset parameters
+
+        Dataset Directory Structure
+
+            Parent_Directory (root)
+                    |   
+                    |-----------Images (img_dir)
+                    |              |
+                    |              |------------------img1.jpg
+                    |              |------------------img2.jpg
+                    |              |------------------.........(and so on)
+                    |
+                    |
+                    |-----------train_labels.csv (anno_file)
+
+        Annotation file format
+
+               | Id         | Labels                                 |
+               | img1.jpg   | x1 y1 x2 y2 label1 x1 y1 x2 y2 label2  |
+
+            Labels: xmin ymin xmax ymax label
+            xmin, ymin - top left corner of bounding box
+            xmax, ymax - bottom right corner of bounding box
+
+
+        Args:
+            train_dataset (list): 
+                First element - Path to root folder containing training images and label file\n
+                Second element - Name of directory containing images\n
+                Third element - Name of Labels files containing annotations in monk format
+            val_dataset (list): Optional \n
+                First element - Path to root folder containing training images and label file\n 
+                Second element - Name of directory containing images\n
+                Third element - Name of Labels files containing annotations in monk format
+            batch_size (int): Mini batch sampling size for training epochs
+            num_workers (int): Number of parallel processors for data loader 
+
+        Returns:
+            None
+        &#39;&#39;&#39;
+        train_root = train_dataset[0];
+        train_img_dir = train_dataset[1];
+        train_anno_file = train_dataset[2];
+
+        self.system_dict[&#34;train_root&#34;] = train_root;
+        self.system_dict[&#34;train_img_dir&#34;] = train_img_dir;
+        self.system_dict[&#34;train_anno_file&#34;] = train_anno_file;
+
+        if(val_dataset):
+            val_root = val_dataset[0];
+            val_img_dir = val_dataset[1];
+            val_anno_file = val_dataset[2];
+
+            self.system_dict[&#34;val_root&#34;] = val_root;
+            self.system_dict[&#34;val_img_dir&#34;] = val_img_dir;
+            self.system_dict[&#34;val_anno_file&#34;] = val_anno_file;
+
+        else:
+            self.system_dict[&#34;val_root&#34;] = train_root;
+            self.system_dict[&#34;val_img_dir&#34;] = train_img_dir;
+            self.system_dict[&#34;val_anno_file&#34;] = train_anno_file;
+
+
+        self.system_dict[&#34;batch_size&#34;] = batch_size;
+        self.system_dict[&#34;num_workers&#34;] = num_workers;
+
+        self.system_dict[&#34;local&#34;][&#34;train_list&#34;] = pd.read_csv(self.system_dict[&#34;train_root&#34;] + 
+            self.system_dict[&#34;train_anno_file&#34;]);
+        columns = self.system_dict[&#34;local&#34;][&#34;train_list&#34;].columns;
+        classes = [];
+        for i in tqdm(range(len(self.system_dict[&#34;local&#34;][&#34;train_list&#34;]))):
+            tmp = self.system_dict[&#34;local&#34;][&#34;train_list&#34;][&#34;Label&#34;][i].split(&#34; &#34;);
+            for j in range(len(tmp)//5):
+                label = tmp[j*5+4];
+                if(label not in classes):
+                    classes.append(label)
+        self.system_dict[&#34;classes&#34;] = sorted(classes)
+
+
+        self.system_dict[&#34;local&#34;][&#34;dataset&#34;] = CustomDatasetMultiObject(self.system_dict[&#34;train_root&#34;], 
+                                            self.system_dict[&#34;train_img_dir&#34;],
+                                            self.system_dict[&#34;train_anno_file&#34;],
+                                              self.get_transform(train=True))
+        self.system_dict[&#34;local&#34;][&#34;dataset_test&#34;] = CustomDatasetMultiObject(self.system_dict[&#34;val_root&#34;], 
+                                                self.system_dict[&#34;val_img_dir&#34;],
+                                                self.system_dict[&#34;val_anno_file&#34;],
+                                                self.get_transform(train=False))
+        
+        self.system_dict[&#34;local&#34;][&#34;num_classes&#34;] = self.system_dict[&#34;local&#34;][&#34;dataset&#34;].num_classes;
+
+
+        # split the dataset in train and test set
+        indices = torch.randperm(len(self.system_dict[&#34;local&#34;][&#34;dataset&#34;])).tolist()
+        self.system_dict[&#34;local&#34;][&#34;dataset&#34;] = torch.utils.data.Subset(self.system_dict[&#34;local&#34;][&#34;dataset&#34;], indices[:])
+        self.system_dict[&#34;local&#34;][&#34;dataset_test&#34;] = torch.utils.data.Subset(self.system_dict[&#34;local&#34;][&#34;dataset_test&#34;], indices[:])
+
+
+        # define training and validation data loaders
+        self.system_dict[&#34;local&#34;][&#34;data_loader&#34;] = torch.utils.data.DataLoader(
+            self.system_dict[&#34;local&#34;][&#34;dataset&#34;], batch_size=self.system_dict[&#34;batch_size&#34;], shuffle=True, 
+            num_workers=self.system_dict[&#34;num_workers&#34;],
+            collate_fn=utils.collate_fn)
+
+        self.system_dict[&#34;local&#34;][&#34;data_loader_test&#34;] = torch.utils.data.DataLoader(
+            self.system_dict[&#34;local&#34;][&#34;dataset_test&#34;], batch_size=self.system_dict[&#34;batch_size&#34;], shuffle=False, 
+            num_workers=self.system_dict[&#34;num_workers&#34;],
+            collate_fn=utils.collate_fn)
+
+
+
+
+
+
+    def Model(self, model_name, use_pretrained=True, use_gpu=True):
+        &#39;&#39;&#39;
+        User function: Set Model parameters
+
+            Available models
+                faster-rcnn_mobilenet-v2
+
+        Args:
+            model_name (str): Select from available models
+            use_pretrained (bool): If True use pretrained weights else randomly initialized weights
+            use_gpu (bool): If True use GPU else run on CPU
+
+        Returns:
+            None
+        &#39;&#39;&#39;
+
+        self.system_dict[&#34;model_name&#34;] = model_name;
+        self.system_dict[&#34;use_pretrained&#34;] = use_pretrained;
+        self.system_dict[&#34;use_gpu&#34;] = use_gpu;
+
+        if(self.system_dict[&#34;model_name&#34;] in self.system_dict[&#34;model_set_1&#34;]):
+            first_name, second_name = self.system_dict[&#34;model_name&#34;].split(&#34;_&#34;);
+            if(first_name == &#34;faster-rcnn&#34; and second_name == &#34;mobilenet-v2&#34;):
+                backbone = torchvision.models.mobilenet_v2(pretrained=use_pretrained).features;
+                backbone.out_channels = 1280;
+                anchor_generator = AnchorGenerator(sizes=((32, 64, 128, 256, 512),),
+                                   aspect_ratios=((0.5, 1.0, 2.0),));
+
+                roi_pooler = torchvision.ops.MultiScaleRoIAlign(featmap_names=[0],
+                                                output_size=7,
+                                                sampling_ratio=2);
+
+                self.system_dict[&#34;local&#34;][&#34;model&#34;] = FasterRCNN(backbone,
+                                                               num_classes=self.system_dict[&#34;local&#34;][&#34;num_classes&#34;],
+                                                               rpn_anchor_generator=anchor_generator,
+                                                               box_roi_pool=roi_pooler);
+
+                self.set_device(use_gpu=self.system_dict[&#34;use_gpu&#34;]);
+
+
+                self.system_dict[&#34;local&#34;][&#34;model&#34;].to(self.system_dict[&#34;local&#34;][&#34;device&#34;]);
+
+
+
+    def set_device(self, use_gpu=True):
+        &#39;&#39;&#39;
+        Internal function: Prepares GPU and CPU devices as per the model parameters set
+
+        Args:
+            use_gpu (bool): If True use GPU else run on CPU
+
+        Returns:
+            None
+        &#39;&#39;&#39;
+        self.system_dict[&#34;use_gpu&#34;] = use_gpu;
+
+        if(self.system_dict[&#34;use_gpu&#34;]):
+            self.system_dict[&#34;local&#34;][&#34;device&#34;] = torch.device(&#39;cuda&#39;) if torch.cuda.is_available() else torch.device(&#39;cpu&#39;)
+        else:
+            self.system_dict[&#34;local&#34;][&#34;device&#34;] = torch.device(&#39;cpu&#39;);
+
+
+    def Set_Learning_Rate(self, lr):
+        &#39;&#39;&#39;
+        User function: Set initial learning rate
+
+        Args:
+            lr (float): Base learning rate
+
+        Returns:
+            None
+        &#39;&#39;&#39;
+        params = [p for p in  self.system_dict[&#34;local&#34;][&#34;model&#34;].parameters() if p.requires_grad]
+        self.system_dict[&#34;local&#34;][&#34;optimizer&#34;] = torch.optim.SGD(params, lr=lr,
+                                    momentum=0.9, weight_decay=0.0005)
+        # and a learning rate scheduler
+        self.system_dict[&#34;local&#34;][&#34;lr_scheduler&#34;] = torch.optim.lr_scheduler.StepLR(self.system_dict[&#34;local&#34;][&#34;optimizer&#34;],
+                                                                                   step_size=5,
+                                                                                   gamma=0.1)
+
+
+    def Train(self, epochs, params_file):
+        &#39;&#39;&#39;
+        User function: Start training
+
+        Args:
+            epochs (int): Number of epochs to train for
+            params_file (str): Trained weights file name with extension as &#34;.params&#34;
+
+        Returns:
+            None
+        &#39;&#39;&#39;
+        self.system_dict[&#34;num_epochs&#34;] = epochs;
+        self.system_dict[&#34;params_file&#34;] = params_file;
+
+        for epoch in range(self.system_dict[&#34;num_epochs&#34;]):
+            # train for one epoch, printing every 10 iterations
+            train_one_epoch(self.system_dict[&#34;local&#34;][&#34;model&#34;], 
+                            self.system_dict[&#34;local&#34;][&#34;optimizer&#34;], 
+                            self.system_dict[&#34;local&#34;][&#34;data_loader&#34;], 
+                            self.system_dict[&#34;local&#34;][&#34;device&#34;], 
+                            epoch, print_freq=20)
+            # update the learning rate
+            self.system_dict[&#34;local&#34;][&#34;lr_scheduler&#34;].step()
+            # evaluate on the test dataset
+            evaluate(self.system_dict[&#34;local&#34;][&#34;model&#34;], 
+                    self.system_dict[&#34;local&#34;][&#34;data_loader_test&#34;], 
+                    device=self.system_dict[&#34;local&#34;][&#34;device&#34;]);
+
+        torch.save(self.system_dict[&#34;local&#34;][&#34;model&#34;].state_dict(), params_file)
+        
+
+
+
+    def get_transform(self, train):
+        &#39;&#39;&#39;
+        Internal function: Get transforms for training
+
+        Args:
+            train (bool):If True, Training tansforms are added, else only test transforms are added
+
+        Returns:
+            Torchvision transforms
+        &#39;&#39;&#39;
+        transforms = []
+        transforms.append(T.ToTensor())
+        if train:
+            transforms.append(T.RandomHorizontalFlip(0.5))
+        return T.Compose(transforms)
+
+        </code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="2_pytorch_finetune.lib.detector_prototype.isnotebook"><code class="name flex">
+<span>def <span class="ident">isnotebook</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def isnotebook():
+    try:
+        shell = get_ipython().__class__.__name__
+        if shell == &#39;ZMQInteractiveShell&#39;:
+            return True   # Jupyter notebook or qtconsole
+        elif shell == &#39;TerminalInteractiveShell&#39;:
+            return False  # Terminal running IPython
+        else:
+            return False  # Other type (?)
+    except NameError:
+        return False</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="2_pytorch_finetune.lib.detector_prototype.Detector"><code class="flex name class">
+<span>class <span class="ident">Detector</span></span>
+<span>(</span><span>verbose=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class to train a detector</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>int</code></dt>
+<dd>Set verbosity levels
+0 - Print Nothing
+1 - Print desired details</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Detector():
+    &#39;&#39;&#39;
+    Class to train a detector
+
+    Args:
+        verbose (int): Set verbosity levels
+                        0 - Print Nothing
+                        1 - Print desired details
+    &#39;&#39;&#39;
+    def __init__(self, verbose=1):
+        self.system_dict = {};
+        self.system_dict[&#34;verbose&#34;] = verbose;
+        self.system_dict[&#34;local&#34;] = {};
+        self.system_dict[&#34;model_set_1&#34;] = [&#34;faster-rcnn_mobilenet-v2&#34;]
+
+
+
+    def Dataset(self, train_dataset, val_dataset=None, batch_size=4, num_workers=4):
+        &#39;&#39;&#39;
+        User function: Set dataset parameters
+
+        Dataset Directory Structure
+
+            Parent_Directory (root)
+                    |   
+                    |-----------Images (img_dir)
+                    |              |
+                    |              |------------------img1.jpg
+                    |              |------------------img2.jpg
+                    |              |------------------.........(and so on)
+                    |
+                    |
+                    |-----------train_labels.csv (anno_file)
+
+        Annotation file format
+
+               | Id         | Labels                                 |
+               | img1.jpg   | x1 y1 x2 y2 label1 x1 y1 x2 y2 label2  |
+
+            Labels: xmin ymin xmax ymax label
+            xmin, ymin - top left corner of bounding box
+            xmax, ymax - bottom right corner of bounding box
+
+
+        Args:
+            train_dataset (list): 
+                First element - Path to root folder containing training images and label file\n
+                Second element - Name of directory containing images\n
+                Third element - Name of Labels files containing annotations in monk format
+            val_dataset (list): Optional \n
+                First element - Path to root folder containing training images and label file\n 
+                Second element - Name of directory containing images\n
+                Third element - Name of Labels files containing annotations in monk format
+            batch_size (int): Mini batch sampling size for training epochs
+            num_workers (int): Number of parallel processors for data loader 
+
+        Returns:
+            None
+        &#39;&#39;&#39;
+        train_root = train_dataset[0];
+        train_img_dir = train_dataset[1];
+        train_anno_file = train_dataset[2];
+
+        self.system_dict[&#34;train_root&#34;] = train_root;
+        self.system_dict[&#34;train_img_dir&#34;] = train_img_dir;
+        self.system_dict[&#34;train_anno_file&#34;] = train_anno_file;
+
+        if(val_dataset):
+            val_root = val_dataset[0];
+            val_img_dir = val_dataset[1];
+            val_anno_file = val_dataset[2];
+
+            self.system_dict[&#34;val_root&#34;] = val_root;
+            self.system_dict[&#34;val_img_dir&#34;] = val_img_dir;
+            self.system_dict[&#34;val_anno_file&#34;] = val_anno_file;
+
+        else:
+            self.system_dict[&#34;val_root&#34;] = train_root;
+            self.system_dict[&#34;val_img_dir&#34;] = train_img_dir;
+            self.system_dict[&#34;val_anno_file&#34;] = train_anno_file;
+
+
+        self.system_dict[&#34;batch_size&#34;] = batch_size;
+        self.system_dict[&#34;num_workers&#34;] = num_workers;
+
+        self.system_dict[&#34;local&#34;][&#34;train_list&#34;] = pd.read_csv(self.system_dict[&#34;train_root&#34;] + 
+            self.system_dict[&#34;train_anno_file&#34;]);
+        columns = self.system_dict[&#34;local&#34;][&#34;train_list&#34;].columns;
+        classes = [];
+        for i in tqdm(range(len(self.system_dict[&#34;local&#34;][&#34;train_list&#34;]))):
+            tmp = self.system_dict[&#34;local&#34;][&#34;train_list&#34;][&#34;Label&#34;][i].split(&#34; &#34;);
+            for j in range(len(tmp)//5):
+                label = tmp[j*5+4];
+                if(label not in classes):
+                    classes.append(label)
+        self.system_dict[&#34;classes&#34;] = sorted(classes)
+
+
+        self.system_dict[&#34;local&#34;][&#34;dataset&#34;] = CustomDatasetMultiObject(self.system_dict[&#34;train_root&#34;], 
+                                            self.system_dict[&#34;train_img_dir&#34;],
+                                            self.system_dict[&#34;train_anno_file&#34;],
+                                              self.get_transform(train=True))
+        self.system_dict[&#34;local&#34;][&#34;dataset_test&#34;] = CustomDatasetMultiObject(self.system_dict[&#34;val_root&#34;], 
+                                                self.system_dict[&#34;val_img_dir&#34;],
+                                                self.system_dict[&#34;val_anno_file&#34;],
+                                                self.get_transform(train=False))
+        
+        self.system_dict[&#34;local&#34;][&#34;num_classes&#34;] = self.system_dict[&#34;local&#34;][&#34;dataset&#34;].num_classes;
+
+
+        # split the dataset in train and test set
+        indices = torch.randperm(len(self.system_dict[&#34;local&#34;][&#34;dataset&#34;])).tolist()
+        self.system_dict[&#34;local&#34;][&#34;dataset&#34;] = torch.utils.data.Subset(self.system_dict[&#34;local&#34;][&#34;dataset&#34;], indices[:])
+        self.system_dict[&#34;local&#34;][&#34;dataset_test&#34;] = torch.utils.data.Subset(self.system_dict[&#34;local&#34;][&#34;dataset_test&#34;], indices[:])
+
+
+        # define training and validation data loaders
+        self.system_dict[&#34;local&#34;][&#34;data_loader&#34;] = torch.utils.data.DataLoader(
+            self.system_dict[&#34;local&#34;][&#34;dataset&#34;], batch_size=self.system_dict[&#34;batch_size&#34;], shuffle=True, 
+            num_workers=self.system_dict[&#34;num_workers&#34;],
+            collate_fn=utils.collate_fn)
+
+        self.system_dict[&#34;local&#34;][&#34;data_loader_test&#34;] = torch.utils.data.DataLoader(
+            self.system_dict[&#34;local&#34;][&#34;dataset_test&#34;], batch_size=self.system_dict[&#34;batch_size&#34;], shuffle=False, 
+            num_workers=self.system_dict[&#34;num_workers&#34;],
+            collate_fn=utils.collate_fn)
+
+
+
+
+
+
+    def Model(self, model_name, use_pretrained=True, use_gpu=True):
+        &#39;&#39;&#39;
+        User function: Set Model parameters
+
+            Available models
+                faster-rcnn_mobilenet-v2
+
+        Args:
+            model_name (str): Select from available models
+            use_pretrained (bool): If True use pretrained weights else randomly initialized weights
+            use_gpu (bool): If True use GPU else run on CPU
+
+        Returns:
+            None
+        &#39;&#39;&#39;
+
+        self.system_dict[&#34;model_name&#34;] = model_name;
+        self.system_dict[&#34;use_pretrained&#34;] = use_pretrained;
+        self.system_dict[&#34;use_gpu&#34;] = use_gpu;
+
+        if(self.system_dict[&#34;model_name&#34;] in self.system_dict[&#34;model_set_1&#34;]):
+            first_name, second_name = self.system_dict[&#34;model_name&#34;].split(&#34;_&#34;);
+            if(first_name == &#34;faster-rcnn&#34; and second_name == &#34;mobilenet-v2&#34;):
+                backbone = torchvision.models.mobilenet_v2(pretrained=use_pretrained).features;
+                backbone.out_channels = 1280;
+                anchor_generator = AnchorGenerator(sizes=((32, 64, 128, 256, 512),),
+                                   aspect_ratios=((0.5, 1.0, 2.0),));
+
+                roi_pooler = torchvision.ops.MultiScaleRoIAlign(featmap_names=[0],
+                                                output_size=7,
+                                                sampling_ratio=2);
+
+                self.system_dict[&#34;local&#34;][&#34;model&#34;] = FasterRCNN(backbone,
+                                                               num_classes=self.system_dict[&#34;local&#34;][&#34;num_classes&#34;],
+                                                               rpn_anchor_generator=anchor_generator,
+                                                               box_roi_pool=roi_pooler);
+
+                self.set_device(use_gpu=self.system_dict[&#34;use_gpu&#34;]);
+
+
+                self.system_dict[&#34;local&#34;][&#34;model&#34;].to(self.system_dict[&#34;local&#34;][&#34;device&#34;]);
+
+
+
+    def set_device(self, use_gpu=True):
+        &#39;&#39;&#39;
+        Internal function: Prepares GPU and CPU devices as per the model parameters set
+
+        Args:
+            use_gpu (bool): If True use GPU else run on CPU
+
+        Returns:
+            None
+        &#39;&#39;&#39;
+        self.system_dict[&#34;use_gpu&#34;] = use_gpu;
+
+        if(self.system_dict[&#34;use_gpu&#34;]):
+            self.system_dict[&#34;local&#34;][&#34;device&#34;] = torch.device(&#39;cuda&#39;) if torch.cuda.is_available() else torch.device(&#39;cpu&#39;)
+        else:
+            self.system_dict[&#34;local&#34;][&#34;device&#34;] = torch.device(&#39;cpu&#39;);
+
+
+    def Set_Learning_Rate(self, lr):
+        &#39;&#39;&#39;
+        User function: Set initial learning rate
+
+        Args:
+            lr (float): Base learning rate
+
+        Returns:
+            None
+        &#39;&#39;&#39;
+        params = [p for p in  self.system_dict[&#34;local&#34;][&#34;model&#34;].parameters() if p.requires_grad]
+        self.system_dict[&#34;local&#34;][&#34;optimizer&#34;] = torch.optim.SGD(params, lr=lr,
+                                    momentum=0.9, weight_decay=0.0005)
+        # and a learning rate scheduler
+        self.system_dict[&#34;local&#34;][&#34;lr_scheduler&#34;] = torch.optim.lr_scheduler.StepLR(self.system_dict[&#34;local&#34;][&#34;optimizer&#34;],
+                                                                                   step_size=5,
+                                                                                   gamma=0.1)
+
+
+    def Train(self, epochs, params_file):
+        &#39;&#39;&#39;
+        User function: Start training
+
+        Args:
+            epochs (int): Number of epochs to train for
+            params_file (str): Trained weights file name with extension as &#34;.params&#34;
+
+        Returns:
+            None
+        &#39;&#39;&#39;
+        self.system_dict[&#34;num_epochs&#34;] = epochs;
+        self.system_dict[&#34;params_file&#34;] = params_file;
+
+        for epoch in range(self.system_dict[&#34;num_epochs&#34;]):
+            # train for one epoch, printing every 10 iterations
+            train_one_epoch(self.system_dict[&#34;local&#34;][&#34;model&#34;], 
+                            self.system_dict[&#34;local&#34;][&#34;optimizer&#34;], 
+                            self.system_dict[&#34;local&#34;][&#34;data_loader&#34;], 
+                            self.system_dict[&#34;local&#34;][&#34;device&#34;], 
+                            epoch, print_freq=20)
+            # update the learning rate
+            self.system_dict[&#34;local&#34;][&#34;lr_scheduler&#34;].step()
+            # evaluate on the test dataset
+            evaluate(self.system_dict[&#34;local&#34;][&#34;model&#34;], 
+                    self.system_dict[&#34;local&#34;][&#34;data_loader_test&#34;], 
+                    device=self.system_dict[&#34;local&#34;][&#34;device&#34;]);
+
+        torch.save(self.system_dict[&#34;local&#34;][&#34;model&#34;].state_dict(), params_file)
+        
+
+
+
+    def get_transform(self, train):
+        &#39;&#39;&#39;
+        Internal function: Get transforms for training
+
+        Args:
+            train (bool):If True, Training tansforms are added, else only test transforms are added
+
+        Returns:
+            Torchvision transforms
+        &#39;&#39;&#39;
+        transforms = []
+        transforms.append(T.ToTensor())
+        if train:
+            transforms.append(T.RandomHorizontalFlip(0.5))
+        return T.Compose(transforms)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="2_pytorch_finetune.lib.detector_prototype.Detector.Dataset"><code class="name flex">
+<span>def <span class="ident">Dataset</span></span>(<span>self, train_dataset, val_dataset=None, batch_size=4, num_workers=4)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>User function: Set dataset parameters</p>
+<p>Dataset Directory Structure</p>
+<pre><code>Parent_Directory (root)
+        |   
+        |-----------Images (img_dir)
+        |              |
+        |              |------------------img1.jpg
+        |              |------------------img2.jpg
+        |              |------------------.........(and so on)
+        |
+        |
+        |-----------train_labels.csv (anno_file)
+</code></pre>
+<p>Annotation file format</p>
+<pre><code>   | Id         | Labels                                 |
+   | img1.jpg   | x1 y1 x2 y2 label1 x1 y1 x2 y2 label2  |
+
+Labels: xmin ymin xmax ymax label
+xmin, ymin - top left corner of bounding box
+xmax, ymax - bottom right corner of bounding box
+</code></pre>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>train_dataset</code></strong> :&ensp;<code>list</code></dt>
+<dd>
+<p>First element - Path to root folder containing training images and label file</p>
+<p>Second element - Name of directory containing images</p>
+<p>Third element - Name of Labels files containing annotations in monk format</p>
+</dd>
+<dt><strong><code>val_dataset</code></strong> :&ensp;<code>list</code></dt>
+<dd>
+<p>Optional </p>
+<p>First element - Path to root folder containing training images and label file</p>
+<p>Second element - Name of directory containing images</p>
+<p>Third element - Name of Labels files containing annotations in monk format</p>
+</dd>
+<dt><strong><code>batch_size</code></strong> :&ensp;<code>int</code></dt>
+<dd>Mini batch sampling size for training epochs</dd>
+<dt><strong><code>num_workers</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of parallel processors for data loader </dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>None</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def Dataset(self, train_dataset, val_dataset=None, batch_size=4, num_workers=4):
+    &#39;&#39;&#39;
+    User function: Set dataset parameters
+
+    Dataset Directory Structure
+
+        Parent_Directory (root)
+                |   
+                |-----------Images (img_dir)
+                |              |
+                |              |------------------img1.jpg
+                |              |------------------img2.jpg
+                |              |------------------.........(and so on)
+                |
+                |
+                |-----------train_labels.csv (anno_file)
+
+    Annotation file format
+
+           | Id         | Labels                                 |
+           | img1.jpg   | x1 y1 x2 y2 label1 x1 y1 x2 y2 label2  |
+
+        Labels: xmin ymin xmax ymax label
+        xmin, ymin - top left corner of bounding box
+        xmax, ymax - bottom right corner of bounding box
+
+
+    Args:
+        train_dataset (list): 
+            First element - Path to root folder containing training images and label file\n
+            Second element - Name of directory containing images\n
+            Third element - Name of Labels files containing annotations in monk format
+        val_dataset (list): Optional \n
+            First element - Path to root folder containing training images and label file\n 
+            Second element - Name of directory containing images\n
+            Third element - Name of Labels files containing annotations in monk format
+        batch_size (int): Mini batch sampling size for training epochs
+        num_workers (int): Number of parallel processors for data loader 
+
+    Returns:
+        None
+    &#39;&#39;&#39;
+    train_root = train_dataset[0];
+    train_img_dir = train_dataset[1];
+    train_anno_file = train_dataset[2];
+
+    self.system_dict[&#34;train_root&#34;] = train_root;
+    self.system_dict[&#34;train_img_dir&#34;] = train_img_dir;
+    self.system_dict[&#34;train_anno_file&#34;] = train_anno_file;
+
+    if(val_dataset):
+        val_root = val_dataset[0];
+        val_img_dir = val_dataset[1];
+        val_anno_file = val_dataset[2];
+
+        self.system_dict[&#34;val_root&#34;] = val_root;
+        self.system_dict[&#34;val_img_dir&#34;] = val_img_dir;
+        self.system_dict[&#34;val_anno_file&#34;] = val_anno_file;
+
+    else:
+        self.system_dict[&#34;val_root&#34;] = train_root;
+        self.system_dict[&#34;val_img_dir&#34;] = train_img_dir;
+        self.system_dict[&#34;val_anno_file&#34;] = train_anno_file;
+
+
+    self.system_dict[&#34;batch_size&#34;] = batch_size;
+    self.system_dict[&#34;num_workers&#34;] = num_workers;
+
+    self.system_dict[&#34;local&#34;][&#34;train_list&#34;] = pd.read_csv(self.system_dict[&#34;train_root&#34;] + 
+        self.system_dict[&#34;train_anno_file&#34;]);
+    columns = self.system_dict[&#34;local&#34;][&#34;train_list&#34;].columns;
+    classes = [];
+    for i in tqdm(range(len(self.system_dict[&#34;local&#34;][&#34;train_list&#34;]))):
+        tmp = self.system_dict[&#34;local&#34;][&#34;train_list&#34;][&#34;Label&#34;][i].split(&#34; &#34;);
+        for j in range(len(tmp)//5):
+            label = tmp[j*5+4];
+            if(label not in classes):
+                classes.append(label)
+    self.system_dict[&#34;classes&#34;] = sorted(classes)
+
+
+    self.system_dict[&#34;local&#34;][&#34;dataset&#34;] = CustomDatasetMultiObject(self.system_dict[&#34;train_root&#34;], 
+                                        self.system_dict[&#34;train_img_dir&#34;],
+                                        self.system_dict[&#34;train_anno_file&#34;],
+                                          self.get_transform(train=True))
+    self.system_dict[&#34;local&#34;][&#34;dataset_test&#34;] = CustomDatasetMultiObject(self.system_dict[&#34;val_root&#34;], 
+                                            self.system_dict[&#34;val_img_dir&#34;],
+                                            self.system_dict[&#34;val_anno_file&#34;],
+                                            self.get_transform(train=False))
+    
+    self.system_dict[&#34;local&#34;][&#34;num_classes&#34;] = self.system_dict[&#34;local&#34;][&#34;dataset&#34;].num_classes;
+
+
+    # split the dataset in train and test set
+    indices = torch.randperm(len(self.system_dict[&#34;local&#34;][&#34;dataset&#34;])).tolist()
+    self.system_dict[&#34;local&#34;][&#34;dataset&#34;] = torch.utils.data.Subset(self.system_dict[&#34;local&#34;][&#34;dataset&#34;], indices[:])
+    self.system_dict[&#34;local&#34;][&#34;dataset_test&#34;] = torch.utils.data.Subset(self.system_dict[&#34;local&#34;][&#34;dataset_test&#34;], indices[:])
+
+
+    # define training and validation data loaders
+    self.system_dict[&#34;local&#34;][&#34;data_loader&#34;] = torch.utils.data.DataLoader(
+        self.system_dict[&#34;local&#34;][&#34;dataset&#34;], batch_size=self.system_dict[&#34;batch_size&#34;], shuffle=True, 
+        num_workers=self.system_dict[&#34;num_workers&#34;],
+        collate_fn=utils.collate_fn)
+
+    self.system_dict[&#34;local&#34;][&#34;data_loader_test&#34;] = torch.utils.data.DataLoader(
+        self.system_dict[&#34;local&#34;][&#34;dataset_test&#34;], batch_size=self.system_dict[&#34;batch_size&#34;], shuffle=False, 
+        num_workers=self.system_dict[&#34;num_workers&#34;],
+        collate_fn=utils.collate_fn)</code></pre>
+</details>
+</dd>
+<dt id="2_pytorch_finetune.lib.detector_prototype.Detector.Model"><code class="name flex">
+<span>def <span class="ident">Model</span></span>(<span>self, model_name, use_pretrained=True, use_gpu=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>User function: Set Model parameters</p>
+<pre><code>Available models
+    faster-rcnn_mobilenet-v2
+</code></pre>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>model_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Select from available models</dd>
+<dt><strong><code>use_pretrained</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If True use pretrained weights else randomly initialized weights</dd>
+<dt><strong><code>use_gpu</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If True use GPU else run on CPU</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>None</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def Model(self, model_name, use_pretrained=True, use_gpu=True):
+    &#39;&#39;&#39;
+    User function: Set Model parameters
+
+        Available models
+            faster-rcnn_mobilenet-v2
+
+    Args:
+        model_name (str): Select from available models
+        use_pretrained (bool): If True use pretrained weights else randomly initialized weights
+        use_gpu (bool): If True use GPU else run on CPU
+
+    Returns:
+        None
+    &#39;&#39;&#39;
+
+    self.system_dict[&#34;model_name&#34;] = model_name;
+    self.system_dict[&#34;use_pretrained&#34;] = use_pretrained;
+    self.system_dict[&#34;use_gpu&#34;] = use_gpu;
+
+    if(self.system_dict[&#34;model_name&#34;] in self.system_dict[&#34;model_set_1&#34;]):
+        first_name, second_name = self.system_dict[&#34;model_name&#34;].split(&#34;_&#34;);
+        if(first_name == &#34;faster-rcnn&#34; and second_name == &#34;mobilenet-v2&#34;):
+            backbone = torchvision.models.mobilenet_v2(pretrained=use_pretrained).features;
+            backbone.out_channels = 1280;
+            anchor_generator = AnchorGenerator(sizes=((32, 64, 128, 256, 512),),
+                               aspect_ratios=((0.5, 1.0, 2.0),));
+
+            roi_pooler = torchvision.ops.MultiScaleRoIAlign(featmap_names=[0],
+                                            output_size=7,
+                                            sampling_ratio=2);
+
+            self.system_dict[&#34;local&#34;][&#34;model&#34;] = FasterRCNN(backbone,
+                                                           num_classes=self.system_dict[&#34;local&#34;][&#34;num_classes&#34;],
+                                                           rpn_anchor_generator=anchor_generator,
+                                                           box_roi_pool=roi_pooler);
+
+            self.set_device(use_gpu=self.system_dict[&#34;use_gpu&#34;]);
+
+
+            self.system_dict[&#34;local&#34;][&#34;model&#34;].to(self.system_dict[&#34;local&#34;][&#34;device&#34;]);</code></pre>
+</details>
+</dd>
+<dt id="2_pytorch_finetune.lib.detector_prototype.Detector.Set_Learning_Rate"><code class="name flex">
+<span>def <span class="ident">Set_Learning_Rate</span></span>(<span>self, lr)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>User function: Set initial learning rate</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>lr</code></strong> :&ensp;<code>float</code></dt>
+<dd>Base learning rate</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>None</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def Set_Learning_Rate(self, lr):
+    &#39;&#39;&#39;
+    User function: Set initial learning rate
+
+    Args:
+        lr (float): Base learning rate
+
+    Returns:
+        None
+    &#39;&#39;&#39;
+    params = [p for p in  self.system_dict[&#34;local&#34;][&#34;model&#34;].parameters() if p.requires_grad]
+    self.system_dict[&#34;local&#34;][&#34;optimizer&#34;] = torch.optim.SGD(params, lr=lr,
+                                momentum=0.9, weight_decay=0.0005)
+    # and a learning rate scheduler
+    self.system_dict[&#34;local&#34;][&#34;lr_scheduler&#34;] = torch.optim.lr_scheduler.StepLR(self.system_dict[&#34;local&#34;][&#34;optimizer&#34;],
+                                                                               step_size=5,
+                                                                               gamma=0.1)</code></pre>
+</details>
+</dd>
+<dt id="2_pytorch_finetune.lib.detector_prototype.Detector.Train"><code class="name flex">
+<span>def <span class="ident">Train</span></span>(<span>self, epochs, params_file)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>User function: Start training</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>epochs</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of epochs to train for</dd>
+<dt><strong><code>params_file</code></strong> :&ensp;<code>str</code></dt>
+<dd>Trained weights file name with extension as ".params"</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>None</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def Train(self, epochs, params_file):
+    &#39;&#39;&#39;
+    User function: Start training
+
+    Args:
+        epochs (int): Number of epochs to train for
+        params_file (str): Trained weights file name with extension as &#34;.params&#34;
+
+    Returns:
+        None
+    &#39;&#39;&#39;
+    self.system_dict[&#34;num_epochs&#34;] = epochs;
+    self.system_dict[&#34;params_file&#34;] = params_file;
+
+    for epoch in range(self.system_dict[&#34;num_epochs&#34;]):
+        # train for one epoch, printing every 10 iterations
+        train_one_epoch(self.system_dict[&#34;local&#34;][&#34;model&#34;], 
+                        self.system_dict[&#34;local&#34;][&#34;optimizer&#34;], 
+                        self.system_dict[&#34;local&#34;][&#34;data_loader&#34;], 
+                        self.system_dict[&#34;local&#34;][&#34;device&#34;], 
+                        epoch, print_freq=20)
+        # update the learning rate
+        self.system_dict[&#34;local&#34;][&#34;lr_scheduler&#34;].step()
+        # evaluate on the test dataset
+        evaluate(self.system_dict[&#34;local&#34;][&#34;model&#34;], 
+                self.system_dict[&#34;local&#34;][&#34;data_loader_test&#34;], 
+                device=self.system_dict[&#34;local&#34;][&#34;device&#34;]);
+
+    torch.save(self.system_dict[&#34;local&#34;][&#34;model&#34;].state_dict(), params_file)</code></pre>
+</details>
+</dd>
+<dt id="2_pytorch_finetune.lib.detector_prototype.Detector.get_transform"><code class="name flex">
+<span>def <span class="ident">get_transform</span></span>(<span>self, train)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Internal function: Get transforms for training</p>
+<h2 id="args">Args</h2>
+<p>train (bool):If True, Training tansforms are added, else only test transforms are added</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Torchvision transforms</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_transform(self, train):
+    &#39;&#39;&#39;
+    Internal function: Get transforms for training
+
+    Args:
+        train (bool):If True, Training tansforms are added, else only test transforms are added
+
+    Returns:
+        Torchvision transforms
+    &#39;&#39;&#39;
+    transforms = []
+    transforms.append(T.ToTensor())
+    if train:
+        transforms.append(T.RandomHorizontalFlip(0.5))
+    return T.Compose(transforms)</code></pre>
+</details>
+</dd>
+<dt id="2_pytorch_finetune.lib.detector_prototype.Detector.set_device"><code class="name flex">
+<span>def <span class="ident">set_device</span></span>(<span>self, use_gpu=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Internal function: Prepares GPU and CPU devices as per the model parameters set</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>use_gpu</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If True use GPU else run on CPU</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>None</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_device(self, use_gpu=True):
+    &#39;&#39;&#39;
+    Internal function: Prepares GPU and CPU devices as per the model parameters set
+
+    Args:
+        use_gpu (bool): If True use GPU else run on CPU
+
+    Returns:
+        None
+    &#39;&#39;&#39;
+    self.system_dict[&#34;use_gpu&#34;] = use_gpu;
+
+    if(self.system_dict[&#34;use_gpu&#34;]):
+        self.system_dict[&#34;local&#34;][&#34;device&#34;] = torch.device(&#39;cuda&#39;) if torch.cuda.is_available() else torch.device(&#39;cpu&#39;)
+    else:
+        self.system_dict[&#34;local&#34;][&#34;device&#34;] = torch.device(&#39;cpu&#39;);</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="2_pytorch_finetune.lib" href="index.html">2_pytorch_finetune.lib</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="2_pytorch_finetune.lib.detector_prototype.isnotebook" href="#2_pytorch_finetune.lib.detector_prototype.isnotebook">isnotebook</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="2_pytorch_finetune.lib.detector_prototype.Detector" href="#2_pytorch_finetune.lib.detector_prototype.Detector">Detector</a></code></h4>
+<ul class="two-column">
+<li><code><a title="2_pytorch_finetune.lib.detector_prototype.Detector.Dataset" href="#2_pytorch_finetune.lib.detector_prototype.Detector.Dataset">Dataset</a></code></li>
+<li><code><a title="2_pytorch_finetune.lib.detector_prototype.Detector.Model" href="#2_pytorch_finetune.lib.detector_prototype.Detector.Model">Model</a></code></li>
+<li><code><a title="2_pytorch_finetune.lib.detector_prototype.Detector.Set_Learning_Rate" href="#2_pytorch_finetune.lib.detector_prototype.Detector.Set_Learning_Rate">Set_Learning_Rate</a></code></li>
+<li><code><a title="2_pytorch_finetune.lib.detector_prototype.Detector.Train" href="#2_pytorch_finetune.lib.detector_prototype.Detector.Train">Train</a></code></li>
+<li><code><a title="2_pytorch_finetune.lib.detector_prototype.Detector.get_transform" href="#2_pytorch_finetune.lib.detector_prototype.Detector.get_transform">get_transform</a></code></li>
+<li><code><a title="2_pytorch_finetune.lib.detector_prototype.Detector.set_device" href="#2_pytorch_finetune.lib.detector_prototype.Detector.set_device">set_device</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
